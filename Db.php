@@ -21,10 +21,10 @@ class Db {
     }
     
     public function set_dev_db(){
-        $this->name = 'profile';
-        $this->user = 'webprofile';
-        $this->host = '66.184.124.98';
-        $this->pass = 'turkey12345';
+        $this->name = '';
+        $this->user = '';
+        $this->host = '';
+        $this->pass = '';
     }
     
     public function select_query($query,$ex_data=null){
