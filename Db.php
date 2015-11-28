@@ -65,17 +65,16 @@ class Db {
                 $act->execute();
             }
             $res = $act->fetchAll();
-            return $res;
         }catch(PDOException $e){
-            return $e;
+            $res = $e;
         }
+        return $res;
     }
     
     public function select_specific($col_name, $table_name, $where = null, $ex_data = null, $and = null){
         //database helper method to get stuff out of the db
         //allows for particular columns to be selected.
         try{
-            
             $conn = new PDO('mysql:host='.$this->host.';dbname='.$this->name,$this->user,$this->pass);
             $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION); //set error mode to fetch error messages
             
@@ -98,12 +97,10 @@ class Db {
             }
             
             $res = $act->fetchAll();
-            
-            return $res;
-            
         }catch(PDOException $e){
-            return $e;
+            $res = $e;
         }
+        return $res;
     }
 
     public function insert($table_name,$col_names,$values,$ex_data){
@@ -111,21 +108,16 @@ class Db {
         try {
             $conn = new PDO('mysql:host='.$this->host.';dbname='.$this->name,$this->user,$this->pass);
             $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-            
             $qu = "INSERT INTO {$table_name} ({$col_names}) VALUES({$values})";
-            
             $act = $conn->prepare($qu);
-            
             $act->execute($ex_data);
+            $res = $act->rowCount() >= 1 ? true : false;
             
-            if($act->rowCount() >= 1){
-                return true;
-            }else{
-                return false;
-            }
         }catch(PDOException $e){
-            return $e;
+            $res = $e;
         }
+
+        return $res;
     }
     
     public function update($table_name,$new_values,$where,$ex_data){
@@ -133,12 +125,9 @@ class Db {
         try{
             $conn = new PDO('mysql:host='.$this->host.';dbname='.$this->name,$this->user,$this->pass);
             $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-            
             $qu = "UPDATE {$table_name} SET {$new_values} WHERE {$where}";
             $act = $conn->prepare($qu);
-            
             $test = $act->execute($ex_data);
-            //var_dump($test);die;
             if($act->rowCount() >= 1){
                 return true;
             }else{
