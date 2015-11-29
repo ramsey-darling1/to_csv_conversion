@@ -53,7 +53,16 @@ if(!empty($rows)){
         $google_shopping_adwords_grouping = !empty($row['placeholder']) ? $row['placeholder'] : null;
         $google_shopping_adwords_labels = !empty($row['placeholder']) ? $row['placeholder'] : null;
         $google_shopping_condition = !empty($row['placeholder']) ? $row['placeholder'] : null;
-        $csv .= "{$handle},{$title}";
+        $google_shopping_custom_product = !empty($row['placeholder']) ? $row['placeholder'] : null;
+        $google_shopping_custom_label_0 = !empty($row['placeholder']) ? $row['placeholder'] : null;
+        $google_shopping_custom_label_1 = !empty($row['placeholder']) ? $row['placeholder'] : null;
+        $google_shopping_custom_label_2 = !empty($row['placeholder']) ? $row['placeholder'] : null;
+        $google_shopping_custom_label_3 = !empty($row['placeholder']) ? $row['placeholder'] : null;
+        $google_shopping_custom_label_4 = !empty($row['placeholder']) ? $row['placeholder'] : null;
+        $variant_image = !empty($row['placeholder']) ? $row['placeholder'] : null;
+        $Variant_weight_unit = !empty($row['placeholder']) ? $row['placeholder'] : null;
+        $csv .= "{$handle},{$title},{$body},{$vendor},{$type},{$tags},{$published},{$option1_name},";
+        $csv .= "{$option1_value},{$title},{$body},{$vendor},{$type},{$tags},{$published},{$option1_name},";
     }
 
 }else{
