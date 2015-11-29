@@ -120,84 +120,9 @@ class Db {
         return $res;
     }
     
-    public function update($table_name,$new_values,$where,$ex_data){
-        //database helper method, controls updates
-        try{
-            $conn = new PDO('mysql:host='.$this->host.';dbname='.$this->name,$this->user,$this->pass);
-            $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-            $qu = "UPDATE {$table_name} SET {$new_values} WHERE {$where}";
-            $act = $conn->prepare($qu);
-            $test = $act->execute($ex_data);
-            if($act->rowCount() >= 1){
-                return true;
-            }else{
-                return false;
-            }
-        }catch(PDOException $e){
-            return $e;
-        }
-    }
-
-    public function delete($table_name,$where,$ex_data){
-        //this method will delete a row from the database
-
-        try{
-
-            $conn = new PDO('mysql:host='.$this->host.';dbname='.$this->name,$this->user,$this->pass);
-            $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-
-            $qu = "DELETE FROM {$table_name} WHERE {$where}";
-
-            $act = $conn->prepare($qu);
-
-            $act->execute($ex_data);
-
-            if($act->rowCount() >= 1){
-                return true;
-            }else{
-                return false;
-            }
-
-
-        }catch(PDOException $e){
-            return $e;
-        }
-
-
-    }
-    
-    public function insert_re_id($table_name,$col_names,$values,$ex_data){
-        //database helper method, controls inserts
-        try {
-            
-            $conn = new PDO('mysql:host='.$this->host.';dbname='.$this->name,$this->user,$this->pass);
-            $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-            
-            $qu = "INSERT INTO {$table_name} ({$col_names}) VALUES({$values})";
-            
-            $act = $conn->prepare($qu);
-            
-            $act->execute($ex_data);
-            
-            if($act->rowCount() >= 1){
-                $res = $conn->lastInsertId();//returns the ID if there is an auto increment set
-            }else{
-                $res = false;
-            }
-        
-        }catch(PDOException $e){
-            $res = $e;
-        }
-        
-        return $res;
-    
-    }
-    
     public function select_order_by($table_name, $orderby, $sort, $limit=null){
         //database helper method to get stuff out of the db
-        
         try{
-            
             $conn = new PDO('mysql:host='.$this->host.';dbname='.$this->name,$this->user,$this->pass);
             $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION); //set error mode to fetch error messages
             
@@ -213,19 +138,15 @@ class Db {
             
             $res = $act->fetchAll();
             
-            return $res;
-            
         }catch(PDOException $e){
-            return $e;
+            $res = $e;
         }
-        
+
+        return $res; 
     }
 
     public function select_where_order_by($table_name, $where, $orderby, $ex_data, $sort=null, $limit=null){
-        //database helper method to get stuff out of the db
-        
         try{
-            
             $conn = new PDO('mysql:host='.$this->host.';dbname='.$this->name,$this->user,$this->pass);
             $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION); //set error mode to fetch error messages
             
@@ -245,48 +166,10 @@ class Db {
             
             $res = $act->fetchAll();
             
-            return $res;
-            
-        }catch(PDOException $e){
-            return $e;
-        }
-        
-    }
-    
-    public function select_sum($col_name, $table_name, $where = null, $ex_data = null, $and = null){
-        //returns the sum of 1 column
-        
-        try{
-            
-            $conn = new PDO('mysql:host='.$this->host.';dbname='.$this->name,$this->user,$this->pass);
-            
-            $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION); //set error mode to fetch error messages
-            
-            $qu = "SELECT sum({$col_name}) FROM {$table_name}";
-            
-            if($where != null){
-                $qu .= " WHERE {$where}";
-            }
-            
-            if($and != null){
-                $qu .= " AND {$and}";
-            }
-            
-            $act = $conn->prepare($qu);
-            
-            !is_null($ex_data) ? $act->execute($ex_data) : $act->execute();
-            
-            $res = $act->fetch();
-            
-            
         }catch(PDOException $e){
             $res = $e;
         }
         
         return $res;
     }
-    
-    
-    
-    
 }//end of Db class
