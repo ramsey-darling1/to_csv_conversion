@@ -6,7 +6,6 @@
  *
  * */
 
-
 include_once 'Db.php';
 
 $db = new Db();
@@ -32,7 +31,7 @@ if(!empty($rows)){
         $option3_value = !empty($row['option3_value']) ? $row['option3_value'] : null;
         $variant_sku = !empty($row['variant_sku']) ? $row['variant_sku'] : null;
         $variant_grams = !empty($row['variant_grams']) ? $row['variant_grams'] : null;
-        $variant_inventory_tracker = !empty($row['variant_inventory_tracker']) ? $row['variant_inventory_tracker'] : null;
+        $variant_inventory_tracker = !empty($row['placeholder']) ? $row['placeholder'] : null;
         $varient_inventory_qty = !empty($row['varient_inventory_qty']) ? $row['varient_inventory_qty'] : null;
         $variant_inventory_policy = !empty($row['placeholder']) ? $row['placeholder'] : null;
         $variant_fulfillment_service = !empty($row['placeholder']) ? $row['placeholder'] : null;
@@ -60,9 +59,33 @@ if(!empty($rows)){
         $google_shopping_custom_label_3 = !empty($row['placeholder']) ? $row['placeholder'] : null;
         $google_shopping_custom_label_4 = !empty($row['placeholder']) ? $row['placeholder'] : null;
         $variant_image = !empty($row['placeholder']) ? $row['placeholder'] : null;
-        $Variant_weight_unit = !empty($row['placeholder']) ? $row['placeholder'] : null;
+        $variant_weight_unit = !empty($row['placeholder']) ? $row['placeholder'] : null;
         $csv .= "{$handle},{$title},{$body},{$vendor},{$type},{$tags},{$published},{$option1_name},";
-        $csv .= "{$option1_value},{$title},{$body},{$vendor},{$type},{$tags},{$published},{$option1_name},";
+        $csv .= "{$option1_value},{$option2_name},{$option2_value},{$option3_name},{$option3_value},";
+        $csv .= "{$option3_name},{$option3_value},{$variant_sku},{$variant_grams},{$variant_inventory_tracker},";
+        $csv .= "{$varient_inventory_qty},{$variant_inventory_policy},{$variant_fulfillment_service},{$variant_price},";
+        $csv .= "{$variant_compaire_at_price},{$variant_requires_shipping},{$variant_taxable},{$variant_barcode},";
+        $csv .= "{$image_src},{$image_alt_text},{$gift_card},{$mpn_google_shopping},{$age_group_google_shopping},";
+        $csv .= "{$gender_google_shopping},{$google_product_category},{$seo_title},{$seo_description},";
+        $csv .= "{$google_shopping_adwords_grouping},{$google_shopping_adwords_labels},{$google_shopping_condition},";
+        $csv .= "{$google_shopping_custom_product},{$google_shopping_custom_label_0},{$google_shopping_custom_label_1},";
+        $csv .= "{$google_shopping_custom_label_2},{$google_shopping_custom_label_3},{$google_shopping_custom_label_4},";
+        $csv .= "{$variant_image},{$variant_weight_unit}\n";
+    }
+    
+    //create CSV file
+    if(!empty($csv)){
+        $filename = uniqid(time());
+        $filename = "shopify_import_{$filename}.csv";
+        $csv_file = fopen($filename,"w") or die("Error, not able to create file!!!"); 
+        fwrite($csv_file,$csv);
+        fclose($csv_file);
+        echo "Successfully created CSV file\n";
+        die;
+
+    }else{
+        //nothing to print. opps.  
+        die("Error. Sorry, there was no data to print.");
     }
 
 }else{
