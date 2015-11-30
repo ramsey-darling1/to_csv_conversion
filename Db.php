@@ -139,7 +139,9 @@ class Db {
             $res = $act->fetchAll();
             
         }catch(PDOException $e){
-            $res = $e;
+            //not going to do anything with the error message
+            //right now
+            $res = false;
         }
 
         return $res; 

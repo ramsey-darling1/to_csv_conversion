@@ -77,7 +77,7 @@ if(!empty($rows)){
     if(!empty($csv)){
         $filename = uniqid(time());
         $filename = "shopify_import_{$filename}.csv";
-        $csv_file = fopen($filename,"w") or die("Error, not able to create file!!!"); 
+        $csv_file = fopen($filename,"w") or die("Error, not able to create file!!!\n"); 
         fwrite($csv_file,$csv);
         fclose($csv_file);
         echo "Successfully created CSV file\n";
@@ -85,10 +85,10 @@ if(!empty($rows)){
 
     }else{
         //nothing to print. opps.  
-        die("Error. Sorry, there was no data to print.");
+        die("Error. Sorry, there was no data to print.\n");
     }
 
 }else{
     //exit the script with warning message
-    die("Sorry, there was an error grabbing the data from database");
+    die("Sorry, there was an error grabbing the data from database\n");
 }
