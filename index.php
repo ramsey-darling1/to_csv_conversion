@@ -11,7 +11,9 @@ include_once 'Db.php';
 function remove_html_junk($str){
     $str = str_replace('"','',$str);
     $str = str_replace(',','',$str);
-    return htmlspecialchars($str);
+    $str = strip_tags($str);
+    $str = str_replace(array("\r", "\n"), '', $str);
+    return $str;
 }
 
 $db = new Db();
