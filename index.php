@@ -18,7 +18,7 @@ function remove_html_junk($str){
 
 $db = new Db();
 
-$rows = $db->select_order_by('item','id','DESC','100');
+$rows = $db->select_order_by('item','id','DESC','500');
 
 $loop_count = 0;
 
@@ -51,8 +51,8 @@ if(!empty($rows)){
         $variant_requires_shipping = !empty($row['placeholder']) ? $row['placeholder'] : true;
         $variant_taxable = !empty($row['placeholder']) ? $row['placeholder'] : true;
         $variant_barcode = !empty($row['upccode']) ? $row['upccode'] : null;
-        $image_src = !empty($row['placeholder']) ? $row['placeholder'] : null;
-        $image_alt_text = !empty($row['placeholder']) ? $row['placeholder'] : null;
+        $image_src = !empty($row['id']) ? 'http://ramseydarling.com/whstore-images/'.$row['id'].'.jpg' : null;
+        $image_alt_text = !empty($row['id']) ? 'Image: '.$row['id'] : null;
         $gift_card = !empty($row['placeholder']) ? $row['placeholder'] : false;
         $mpn_google_shopping = !empty($row['placeholder']) ? $row['placeholder'] : null;
         $age_group_google_shopping = !empty($row['placeholder']) ? $row['placeholder'] : null;
