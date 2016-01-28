@@ -134,13 +134,17 @@ class Db {
         return $res;
     }
     
-    public function select_order_by($table_name, $orderby, $sort, $limit=null){
+    public function select_order_by($table_name, $orderby, $sort, $limit=null, $where=null){
         //database helper method to get stuff out of the db
         try{
             $conn = new PDO($this->connection_string);
             $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION); //set error mode to fetch error messages
             
-            $qu = "SELECT * FROM {$table_name} ORDER BY {$orderby} {$sort}";
+            if(isset($where)){
+                $qu = "SELECT * FROM {$table_name} WHERE {$where} ORDER BY {$orderby} {$sort}";
+            }else{
+                $qu = "SELECT * FROM {$table_name} ORDER BY {$orderby} {$sort}";
+            }
             
             if(isset($limit)){
                 $qu .= " LIMIT {$limit}";

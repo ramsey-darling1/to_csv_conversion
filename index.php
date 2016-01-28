@@ -18,7 +18,10 @@ function remove_html_junk($str){
 
 $db = new Db();
 
-$rows = $db->select_order_by('item','id','DESC','500');
+$where = "id > 18790";
+
+$rows = $db->select_order_by('item','id','ASC','500',$where);
+//$rows = $db->select_order_by('item','id','ASC','500');
 
 $loop_count = 0;
 
@@ -113,6 +116,7 @@ if(!empty($rows)){
         fwrite($csv_file,$csv);
         fclose($csv_file);
         echo "Successfully created CSV file\n";
+        echo "Last ID {$handle}\n";
         die;
 
     }else{
