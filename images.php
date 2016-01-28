@@ -10,7 +10,9 @@ include_once 'Db.php';
 
 $db = new Db();
 
-$rows = $db->select_order_by('images','id','DESC',500);
+$where = "id > 10018174";
+
+$rows = $db->select_order_by('images','id','ASC',700,$where);
 
 $count = 0;
 
@@ -19,7 +21,7 @@ if(!empty($rows)){
     foreach($rows as $row){
         if(!empty($row['image']) && !empty($row['item_id'])){
             $image = imagecreatefromstring(stream_get_contents($row['image']));
-            imagejpeg($image, "images/{$row['item_id']}.jpg");
+            imagejpeg($image, "imgs/{$row['item_id']}.jpg");
             echo "Created image {$count}\n";
             $last_image_id = $row['id'];
         }
